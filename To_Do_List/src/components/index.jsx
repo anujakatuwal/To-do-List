@@ -12,8 +12,14 @@ const ToDo = () => {
 
   function handleAddTask() {
     if (input.trim() === "") return;
-    setTasks([...tasks, input]);
+    setTasks([...tasks, { text: input, completed: false }]);
     setInput("");
+  }
+
+  function handleToggleComplete(getCurrentIndex) {
+    const works = [...tasks];
+    works[getCurrentIndex].completed = !works[getCurrentIndex].completed;
+    setTasks(works);
   }
 
   function handleEdit(getCurrentIndex) {
@@ -23,7 +29,7 @@ const ToDo = () => {
 
   function handleSaveEdit(newTask) {
     const updated = [...tasks];
-    updated[editIndex] = newTask;
+    updated[editIndex].text = newTask;
     setTasks(updated);
     setShowEditPopup(false);
     setEditIndex(null);
@@ -56,38 +62,51 @@ const ToDo = () => {
       <div className="h-[70vh] bg-white border-purple-600 border-2 rounded-2xl w-[430px] m-auto">
         <h1 className="font-bold text-2xl text-center p-4">To-Do List</h1>
         <div className="w-[90%] m-auto">
-          <div className="flex gap-3 text-center">
+          <div className="flex gap-3 text-center my-3">
             <input
               onKeyDown={(e) => {
                 if (e.key === "Enter") handleAddTask();
               }}
-              className="border border-gray-400 rounded-full py-2 px-6 w-[350px]"
+              className="border border-gray-400 rounded-full py-2 px-6 w-[350px] "
               type="text"
               onChange={(e) => setInput(e.target.value)}
               value={input}
               placeholder="Add a new task..."
             />
-            <Button onClick={handleAddTask} name={"ADD"} className={"px-7"} />
+            <Button onClick={handleAddTask} name={"ADD"} className={"px-7 "} />
           </div>
           {tasks
             ? tasks.map((task, index) => (
-                <div className="flex gap-5 p-2 relative">
-                  <input type="checkbox" />
-                  <p>{task}</p>
-                  <Button
-                    onClick={() => handleEdit(index)}
-                    name={<FaEdit fill="purple" />}
-                    className={
-                      " h-[28px] w-[28px] p-2 pt-1 pl-1 absolute right-9"
-                    }
-                  />
-                  <Button
-                    onClick={() => handleDelete(index)}
-                    name={<FaTrash fill="purple" />}
-                    className={
-                      "h-[28px] w-[28px] p-1 pt-1 pr-1 absolute right-0"
-                    }
-                  />
+                <div className="flex items-center justify-between gap-3 p-2">
+                  <div
+                    className="flex gap-5 items-center text-lg"
+                    onClick={() => handleToggleComplete(index)}
+                  >
+                    <input
+                      checked={task.completed}
+                      className="w-4 h-4 appearance-none rounded-full border-2 border-purple-500 checked:bg-purple-500 checked:border-purple-800 cursor-pointer "
+                      type="checkbox"
+                    />
+                    <p
+                      className={
+                        task.completed ? `line-through text-gray-600` : ""
+                      }
+                    >
+                      {task.text}
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={() => handleEdit(index)}
+                      name={<FaEdit fill="purple" />}
+                      className={" h-[28px] w-[28px] p-2 pt-1 pl-1"}
+                    />
+                    <Button
+                      onClick={() => handleDelete(index)}
+                      name={<FaTrash fill="purple" />}
+                      className={"h-[28px] w-[28px] p-1 pt-1 pr-1 absolut"}
+                    />
+                  </div>
                 </div>
               ))
             : null}

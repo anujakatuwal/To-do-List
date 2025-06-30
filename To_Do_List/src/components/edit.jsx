@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "./button";
 
 const EditTask = ({ task,tasks, handleSaveEdit,handleCancelEdit,index }) => {
-  const [editedTask, setEditedTask] = useState(task);
+  const [editedTask, setEditedTask] = useState(task.text);
 
   return (
     <div className="fixed bg-black bg-opacity-40 inset-0 flex justify-center items-center">
