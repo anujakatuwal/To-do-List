@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "./button";
 
-const EditTask = ({ task,tasks, handleSaveEdit,index }) => {
+const EditTask = ({ task,tasks, handleSaveEdit,handleCancelEdit,index }) => {
   const [editedTask, setEditedTask] = useState(task);
 
   return (
@@ -16,8 +16,9 @@ const EditTask = ({ task,tasks, handleSaveEdit,index }) => {
         <Button
           onClick={() => handleSaveEdit(editedTask)}
           name={"Save Changes"}
-          className={"p-4 absolute right-2 bottom-2"}
+          className={"p-4 absolute right-3 bottom-2"}
         />
+        <Button onClick={handleCancelEdit} name={"Cancel"} className={"p-4 absolute left-3 bottom-2"}/>
       </div>
     </div>
   );

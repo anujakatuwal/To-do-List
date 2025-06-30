@@ -29,6 +29,11 @@ const ToDo = () => {
     setEditIndex(null);
   }
 
+  function handleCancelEdit() {
+    setEditIndex(null);
+    setShowEditPopup(false);
+  }
+
   function handleDelete(getCurrentIndex) {
     const updatedTasks = tasks.filter((_, index) => index !== getCurrentIndex);
     setTasks(updatedTasks);
@@ -88,7 +93,14 @@ const ToDo = () => {
             : null}
         </div>
       </div>
-      {showEditPopup && <EditTask task={tasks[editIndex]} handleSaveEdit={handleSaveEdit} index={editIndex}/>}
+      {showEditPopup && (
+        <EditTask
+          task={tasks[editIndex]}
+          handleSaveEdit={handleSaveEdit}
+          handleCancelEdit={handleCancelEdit}
+          index={editIndex}
+        />
+      )}
     </div>
   );
 };
