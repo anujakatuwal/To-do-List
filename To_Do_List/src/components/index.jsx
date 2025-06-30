@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Button from "./button";
 
 const ToDo = () => {
   const [input, setInput] = useState("");
@@ -11,9 +12,7 @@ const ToDo = () => {
     setInput("");
   }
 
-  function handleEdit(getCurrentIndex) {
-    
-  }
+  function handleEdit(getCurrentIndex) {}
 
   function handleDelete(getCurrentIndex) {
     const updatedTasks = tasks.filter((_, index) => index !== getCurrentIndex);
@@ -38,27 +37,25 @@ const ToDo = () => {
         <h1 className="font-bold text-2xl text-center p-4">To-Do List</h1>
         <div className="w-[90%] m-auto">
           <div className="flex gap-3 text-center">
-            <input onKeyDown={(e)=>{if(e.key==='Enter') handleAddTask()}}
+            <input
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleAddTask();
+              }}
               className="border border-gray-400 rounded-full p-2 pr-[80px] pl-6 "
               type="text"
               onChange={(e) => setInput(e.target.value)}
               value={input}
               placeholder="Add a new task..."
             />
-            <button
-              onClick={handleAddTask}
-              className="bg-purple-300 border-purple-600 border-2  rounded-full px-7 py-2"
-            >
-              ADD
-            </button>
+            <Button onClick={handleAddTask} name={"ADD"} />
           </div>
           {tasks
             ? tasks.map((task, index) => (
                 <div className="flex gap-5 p-2">
                   <input type="checkbox" />
                   <p>{task}</p>
-                  <button onClick={() => handleEdit(index)}>Edit</button>
-                  <button onClick={() => handleDelete(index)}>Delete</button>
+                  <Button onClick={()=>handleEdit(index)} name={"Edit"} />
+                  <Button onClick={()=>handleDelete(index)} name={"Delete"} />
                 </div>
               ))
             : null}
